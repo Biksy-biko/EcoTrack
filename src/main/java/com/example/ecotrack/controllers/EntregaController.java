@@ -1,5 +1,7 @@
 package com.example.ecotrack.controllers;
 
+import com.example.ecotrack.DTO.AtualizarUsuarioResponse;
+import com.example.ecotrack.DTO.CadastrarEntregaResponse;
 import com.example.ecotrack.entities.Entrega;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +16,16 @@ public class EntregaController {
     }
 
     @PostMapping
-    public ResponseEntity<Entrega> RegistrarEntrega (@RequestBody Entrega entregaRequest){return ResponseEntity.ok(entregaRequest);}
+    public ResponseEntity<CadastrarEntregaResponse> RegistrarEntrega (@RequestBody Entrega entregaRequest){
+        return ResponseEntity.ok(entregaRequest);
+    }
 
     @PostMapping
-    public ResponseEntity<Entrega> CancelarEntrega (@RequestBody Entrega entregaRequest){return ResponseEntity.ok(entregaRequest);}
+    public ResponseEntity<Entrega> CancelarEntrega (@RequestBody Entrega entregaRequest){
+        return ResponseEntity.ok(entregaRequest);
+    }
 
-    /*@GetMapping("/{dataEntrega}")
+    @GetMapping("/{dataEntrega}")
     public String DatadaEntrega(@PathVariable Long dataEntrega) {
         return "Data: "+dataEntrega;
     }
@@ -27,6 +33,6 @@ public class EntregaController {
     @GetMapping("/{quantidadeEntrega}")
     public String QuantidadeEntregas(@PathVariable Long quantidadeEntrega) {
         return "Entregas já realziadas: "+quantidadeEntrega;
-    }*/
+    }
 
 }

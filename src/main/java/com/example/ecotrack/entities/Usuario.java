@@ -1,11 +1,16 @@
 package com.example.ecotrack.entities;
 
+import java.time.LocalDateTime;
+
 public class Usuario {
 
     private Long id;
     private String nome;
     private String cpf;
     private String dataNascimento;
+    private LocalDateTime dataCadastro;
+    private LocalDateTime dataAtualizacao;
+    private String status;
 
     public Usuario() {
         this.id = 1L;
@@ -45,5 +50,29 @@ public class Usuario {
 
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

@@ -5,16 +5,21 @@ import java.time.LocalDateTime;
 public class Entrega {
 
     private Long idEntrega;
+    private Cidade cidadeOrigem;
+    private Cidade ufOrigem;
+    private LocalDateTime tempoEstimado;
+    private LocalDateTime dataCriacao;
     private LocalDateTime dataEntrega;
-    private Cidade cidadeEntrega;
-    private Cidade ufEntrega;
+    private Cidade cidadeDestino;
+    private Cidade ufDestino;
     private Double cargaTotal;
 
-    public Entrega(Long idEntrega, LocalDateTime dataEntrega, Cidade cidadeEntrega, Cidade ufEntrega, Double cargaTotal){
+    public Entrega(Long idEntrega, LocalDateTime tempoEstimado, LocalDateTime dataEntrega, Cidade cidadeEntrega, Cidade ufDestino, Double cargaTotal){
         this.idEntrega=idEntrega;
+        this.tempoEstimado=tempoEstimado;
         this.dataEntrega=dataEntrega;
-        this.cidadeEntrega=cidadeEntrega;
-        this.ufEntrega=ufEntrega;
+        this.cidadeDestino =cidadeEntrega;
+        this.ufDestino = ufDestino;
         this.cargaTotal=cargaTotal;
     }
 
@@ -24,6 +29,9 @@ public class Entrega {
     public LocalDateTime getDataEntrega(){
         return this.dataEntrega;
     }
+    public LocalDateTime getTempoEstimado(){
+        return this.tempoEstimado;
+    }
     public Double getCargaTotal() {
         return this.cargaTotal;
     }
@@ -32,27 +40,55 @@ public class Entrega {
         this.idEntrega = idEntrega;
     }
 
+    public void setTempoEstimado(LocalDateTime tempoEstimado) {
+        this.tempoEstimado = tempoEstimado;
+    }
+
     public void setDataEntrega(LocalDateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
-    public Cidade getCidadeEntrega() {
-        return cidadeEntrega;
+    public Cidade getCidadeDestino() {
+        return cidadeDestino;
     }
 
-    public void setCidadeEntrega(Cidade cidadeEntrega) {
-        this.cidadeEntrega = cidadeEntrega;
+    public void setCidadeDestino(Cidade cidadeDestino) {
+        this.cidadeDestino = cidadeDestino;
     }
 
-    public Cidade getUfEntrega() {
-        return ufEntrega;
+    public Cidade getUfDestino() {
+        return ufDestino;
     }
 
-    public void setUfEntrega(Cidade ufEntrega) {
-        this.ufEntrega = ufEntrega;
+    public void setUfDestino(Cidade ufDestino) {
+        this.ufDestino = ufDestino;
     }
 
     public void setCargaTotal(Double cargaTotal) {
         this.cargaTotal = cargaTotal;
+    }
+
+    public Cidade getCidadeOrigem() {
+        return cidadeOrigem;
+    }
+
+    public void setCidadeOrigem(Cidade cidadeOrigem) {
+        this.cidadeOrigem = cidadeOrigem;
+    }
+
+    public Cidade getUfOrigem() {
+        return ufOrigem;
+    }
+
+    public void setUfOrigem(Cidade ufOrigem) {
+        this.ufOrigem = ufOrigem;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 }
