@@ -15,10 +15,10 @@ public class EntregaController {
         return "ID de entrega:" + id;
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<CadastrarEntregaResponse> RegistrarEntrega (@RequestBody Entrega entregaRequest){
         return ResponseEntity.ok(entregaRequest);
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity<Entrega> CancelarEntrega (@RequestBody Entrega entregaRequest){
