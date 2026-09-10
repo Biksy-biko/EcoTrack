@@ -1,27 +1,38 @@
 package com.example.ecotrack.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Entrega {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEntrega;
-    private Cidade cidadeOrigem;
+    /*private Cidade cidadeOrigem;
     private Cidade ufOrigem;
+    private Cidade cidadeDestino;
+    private Cidade ufDestino;
+     */
     private LocalDateTime tempoEstimado;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataEntrega;
-    private Cidade cidadeDestino;
-    private Cidade ufDestino;
+
     private Double cargaTotal;
 
     public Entrega(Long idEntrega, LocalDateTime tempoEstimado, LocalDateTime dataEntrega, Cidade cidadeEntrega, Cidade ufDestino, Double cargaTotal){
         this.idEntrega=idEntrega;
         this.tempoEstimado=tempoEstimado;
         this.dataEntrega=dataEntrega;
-        this.cidadeDestino =cidadeEntrega;
-        this.ufDestino = ufDestino;
+       /* this.cidadeDestino =cidadeEntrega;
+        this.ufDestino = ufDestino;*/
         this.cargaTotal=cargaTotal;
     }
+    public Entrega(){}
 
     public Long getIdEntrega(){
         return this.idEntrega;
@@ -47,8 +58,18 @@ public class Entrega {
     public void setDataEntrega(LocalDateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
 
-    public Cidade getCidadeDestino() {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+    public void setCargaTotal(Double cargaTotal) {
+        this.cargaTotal = cargaTotal;
+    }
+
+    /*public Cidade getCidadeDestino() {
         return cidadeDestino;
     }
 
@@ -62,10 +83,6 @@ public class Entrega {
 
     public void setUfDestino(Cidade ufDestino) {
         this.ufDestino = ufDestino;
-    }
-
-    public void setCargaTotal(Double cargaTotal) {
-        this.cargaTotal = cargaTotal;
     }
 
     public Cidade getCidadeOrigem() {
@@ -82,13 +99,5 @@ public class Entrega {
 
     public void setUfOrigem(Cidade ufOrigem) {
         this.ufOrigem = ufOrigem;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
+    }*/
 }

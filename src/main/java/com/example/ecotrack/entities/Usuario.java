@@ -19,6 +19,7 @@ public class Usuario {
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAtualizacao;
     private String status;
+    private String senha;
 
     public Usuario() {}
 
@@ -45,9 +46,7 @@ public class Usuario {
     }
 
     public void setNome(String nome) {
-        if (this.nome.isEmpty()){
-            this.nome = nome;
-        }
+        this.nome = nome;
     }
 
     public void setCpf(String cpf) {
@@ -80,5 +79,13 @@ public class Usuario {
 
     public void setDataCadastro(LocalDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

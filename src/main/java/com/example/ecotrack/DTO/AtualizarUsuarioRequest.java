@@ -6,6 +6,8 @@ public class AtualizarUsuarioRequest {
     private String nome;
     private String cpf;
     private String dataNascimento;
+    private String senha;
+    private String status;
 
     public String getNome() {
         return nome;
@@ -29,5 +31,21 @@ public class AtualizarUsuarioRequest {
 
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
