@@ -40,6 +40,7 @@ public class GestorController {
         Usuario usuarioConstrutorCompleto = new Usuario("Samuel","0390213921","27/11/2023");
         return usuarioConstrutorCompleto;
     }
+
     @PostMapping
     public ResponseEntity<AtualizarUsuarioResponse> CadastrarUsuario(@RequestBody AtualizarUsuarioRequest usuarioRequest){
 

@@ -1,10 +1,10 @@
 package com.example.ecotrack.DTO;
 
-public class AtualizarEntregaResponse {
+public class AtualizarMaterialResponse {
 
-    public AtualizarEntregaResponse(){}
+    public AtualizarMaterialResponse(){}
 
-    public AtualizarEntregaResponse (Long id, String mensagem){
+    public AtualizarMaterialResponse (Long id, String mensagem){
         this.id=id;
         this.mensagem=mensagem;
     }
@@ -27,5 +27,4 @@ public class AtualizarEntregaResponse {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
-
 }

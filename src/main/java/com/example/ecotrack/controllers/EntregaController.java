@@ -1,9 +1,9 @@
 package com.example.ecotrack.controllers;
 
-import com.example.ecotrack.DTO.CadastrarEntregaRequest;
-import com.example.ecotrack.DTO.CadastrarEntregaResponse;
+import com.example.ecotrack.DTO.*;
 import com.example.ecotrack.entities.Entrega;
 import com.example.ecotrack.entities.Material;
+import com.example.ecotrack.entities.Usuario;
 import com.example.ecotrack.repository.EntregaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class EntregaController {
     }
 
     @GetMapping
-    public List<Material> ConsultarEtrega(){
+    public List<Entrega> ConsultarEtrega(){
 
         return entregaRepository.findAll();
     }
@@ -41,6 +41,11 @@ public class EntregaController {
         entregaBanco.setCargaTotal(entregaRequest.getCargaTotal());
         entregaBanco.setTempoEstimado(entregaRequest.getTempoEstimado());
 
+        if (entregaRequest.getTempoEstimado().isBefore(LocalDateTime.now())){
+            return ResponseEntity.badRequest()
+                    .body(new CadastrarEntregaResponse(null,"Sem entregas para o passado, viajante do tempo!"));
+        }
+
         entregaBanco.setStatus("Pendente");
         entregaBanco.setDataCriacao(LocalDateTime.now());
 
@@ -48,12 +53,36 @@ public class EntregaController {
         return ResponseEntity.ok(new CadastrarEntregaResponse(entregaBanco.getIdEntrega(),"Entrega Marcada."));
     }
 
-    /*@PostMapping
-    public ResponseEntity<Entrega> CancelarEntrega (@RequestBody Entrega entregaRequest){
-        return ResponseEntity.ok(entregaRequest);
-    }*/
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AtualizarEntregaResponse> CancelarEntrega (@PathVariable Long id){
 
-    @GetMapping("/{dataEntrega}")
+            Entrega entregaBanco = entregaRepository.findById(id).orElse(null);
+
+            if (entregaBanco != null){
+                entregaBanco.setStatus("Cancelada");
+                entregaRepository.save(entregaBanco);
+                return ResponseEntity.ok().build();
+
+            }return ResponseEntity.notFound().build();
+        }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<AtualizarEntregaResponse> ConcluirEntrega (@PathVariable Long id, @RequestBody AtualizarStatusEntregaRequest entregaRequest){
+
+        Entrega entregaBanco = entregaRepository.findById(id).orElse(null);
+
+        if (entregaBanco != null){
+            entregaBanco.setStatus("Entregue");
+            entregaBanco.setDataEntrega(LocalDateTime.now());
+            entregaRepository.save(entregaBanco);
+            return ResponseEntity.ok(new AtualizarEntregaResponse(entregaBanco.getIdEntrega(),"Entrega Finalizada."));
+
+
+        }return ResponseEntity.notFound().build();
+    }
+}
+
+    /*@GetMapping("/{dataEntrega}")
     public String DatadaEntrega(@PathVariable Long dataEntrega) {
         return "Data: "+dataEntrega;
     }
@@ -61,6 +90,5 @@ public class EntregaController {
     @GetMapping("/{quantidadeEntrega}")
     public String QuantidadeEntregas(@PathVariable Long quantidadeEntrega) {
         return "Entregas já realziadas: "+quantidadeEntrega;
-    }
+    }*/
 
-}
