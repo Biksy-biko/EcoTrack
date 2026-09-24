@@ -1,5 +1,7 @@
 package com.example.ecotrack.DTO;
 
+import com.example.ecotrack.entities.Empresa;
+
 public class AtualizarUsuarioRequest {
     public AtualizarUsuarioRequest(){}
 
@@ -8,6 +10,7 @@ public class AtualizarUsuarioRequest {
     private String dataNascimento;
     private String senha;
     private String status;
+    private Long empresa_id;
 
     public String getNome() {
         return nome;
@@ -47,5 +50,15 @@ public class AtualizarUsuarioRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getEmpresa_id() {
+        return empresa_id;
+    }
+
+    public void setEmpresa_id(Long empresa_id) {
+        this.empresa_id = empresa_id;
+
+
     }
 }

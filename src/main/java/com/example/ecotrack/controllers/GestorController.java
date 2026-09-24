@@ -4,6 +4,7 @@ import com.example.ecotrack.DTO.AtualizarStatusUsuarioRequest;
 import com.example.ecotrack.DTO.AtualizarUsuarioRequest;
 import com.example.ecotrack.DTO.AtualizarUsuarioResponse;
 import com.example.ecotrack.entities.Usuario;
+import com.example.ecotrack.repository.EmpresaRepository;
 import com.example.ecotrack.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @RestController
 @RequestMapping("/gestores")
 public class GestorController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     @GetMapping
     public List<Usuario> ConsultaUsuario() {
@@ -44,11 +50,18 @@ public class GestorController {
     @PostMapping
     public ResponseEntity<AtualizarUsuarioResponse> CadastrarUsuario(@RequestBody AtualizarUsuarioRequest usuarioRequest){
 
+        var empresaBanco = empresaRepository.findById(usuarioRequest.getEmpresa_id()).orElse(null);
+
+        if (empresaBanco == null){
+            return ResponseEntity.notFound().build();
+        }
+
         Usuario usuariobanco = new Usuario();
         usuariobanco.setNome(usuarioRequest.getNome());
         usuariobanco.setCpf(usuarioRequest.getCpf());
         usuariobanco.setDataNascimento(usuarioRequest.getDataNascimento());
         usuariobanco.setSenha(usuarioRequest.getSenha());
+        usuariobanco.setEmpresa(empresaBanco);
 
         usuariobanco.setDataCadastro(LocalDateTime.now());
         usuariobanco.setStatus("A");

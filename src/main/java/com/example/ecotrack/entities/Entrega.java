@@ -1,9 +1,6 @@
 package com.example.ecotrack.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -21,8 +18,12 @@ public class Entrega {
     private LocalDateTime tempoEstimado;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataEntrega;
-
     private Double cargaTotal;
+
+    @ManyToOne
+    @JoinColumn(name = "cidade_id", referencedColumnName = "id")
+    private Cidade cidade;
+
 
     public Entrega(Long idEntrega, LocalDateTime tempoEstimado, LocalDateTime dataEntrega, String cidadeEntrega, String ufDestino, Double cargaTotal){
         this.idEntrega=idEntrega;
@@ -107,5 +108,13 @@ public class Entrega {
 
     public void setUfOrigem(String ufOrigem) {
         this.ufOrigem = ufOrigem;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 }

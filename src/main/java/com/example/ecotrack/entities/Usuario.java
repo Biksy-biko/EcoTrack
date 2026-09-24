@@ -1,9 +1,7 @@
 package com.example.ecotrack.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.ecotrack.DTO.EmpresaResponse;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +18,22 @@ public class Usuario {
     private LocalDateTime dataAtualizacao;
     private String status;
     private String senha;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", referencedColumnName = "id")
+    private Empresa empresa;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 
     public Usuario() {}
 
