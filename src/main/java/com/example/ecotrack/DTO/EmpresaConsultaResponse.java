@@ -1,34 +1,22 @@
-package com.example.ecotrack.entities;
+package com.example.ecotrack.DTO;
 
-import jakarta.persistence.*;
+import com.example.ecotrack.entities.Empresa;
 
-import java.util.List;
+public class EmpresaConsultaResponse {
 
-@Entity
-public class Empresa {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true)
     private String cnpj;
-
     private String razaoSocial;
     private String nomeFantasia;
     private String inscricaoEstadual;
 
-    @OneToMany(mappedBy = "empresa")
-    private List<Usuario> usuarios;
-
-    public Empresa() {}
-
-    public Long getId() {
-        return id;
+    public EmpresaConsultaResponse() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public EmpresaConsultaResponse(Empresa empresa){
+        this.cnpj = empresa.getCnpj();
+        this.razaoSocial = empresa.getRazaoSocial();
+        this.nomeFantasia = empresa.getNomeFantasia();
+        this.inscricaoEstadual = empresa.getInscricaoEstadual();
     }
 
     public String getCnpj() {
@@ -62,12 +50,5 @@ public class Empresa {
     public void setInscricaoEstadual(String inscricaoEstadual) {
         this.inscricaoEstadual = inscricaoEstadual;
     }
-
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
 }
+

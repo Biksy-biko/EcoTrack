@@ -11,7 +11,7 @@ public class Cidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+    private String cidade;
     private String IBGE;
     private String uf;
 
@@ -26,12 +26,12 @@ public class Cidade {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getCidade() {
+        return cidade;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getIBGE() {
@@ -49,4 +49,6 @@ public class Cidade {
     public void setUf(String uf) {
         this.uf = uf;
     }
+
+
 }

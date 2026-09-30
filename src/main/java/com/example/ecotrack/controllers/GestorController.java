@@ -3,6 +3,7 @@ package com.example.ecotrack.controllers;
 import com.example.ecotrack.DTO.AtualizarStatusUsuarioRequest;
 import com.example.ecotrack.DTO.AtualizarUsuarioRequest;
 import com.example.ecotrack.DTO.AtualizarUsuarioResponse;
+import com.example.ecotrack.DTO.UsuarioConsultaResponse;
 import com.example.ecotrack.entities.Usuario;
 import com.example.ecotrack.repository.EmpresaRepository;
 import com.example.ecotrack.repository.UsuarioRepository;
@@ -26,9 +27,9 @@ public class GestorController {
     private EmpresaRepository empresaRepository;
 
     @GetMapping
-    public List<Usuario> ConsultaUsuario() {
+    public List<UsuarioConsultaResponse> ConsultaUsuario() {
 
-        return usuarioRepository.findAll();
+        return usuarioRepository.findAll().stream().map(UsuarioConsultaResponse::new).toList();
     }
 
     @GetMapping("/{id}")
@@ -78,6 +79,13 @@ public class GestorController {
 
         Usuario usuariobanco = usuarioRepository.findById(id).orElse(null);
         if (usuariobanco != null){
+
+            var empresaBanco = empresaRepository.findById(usuarioRequest.getEmpresa_id()).orElse(null);
+            if (empresaBanco == null){
+                return ResponseEntity.notFound().build();
+            }
+
+            usuariobanco.setEmpresa(empresaBanco);
             usuariobanco.setNome(usuarioRequest.getNome());
             usuariobanco.setCpf(usuarioRequest.getCpf());
             usuariobanco.setDataNascimento(usuarioRequest.getDataNascimento());

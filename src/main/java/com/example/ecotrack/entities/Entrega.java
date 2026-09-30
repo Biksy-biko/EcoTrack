@@ -10,10 +10,10 @@ public class Entrega {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEntrega;
-    private String cidadeOrigem;
-    private String ufOrigem;
-    private String cidadeDestino;
-    private String ufDestino;
+    private Cidade cidadeOrigem;
+    private Cidade ufOrigem;
+    private Cidade cidadeDestino;
+    private Cidade ufDestino;
     private String status;
     private LocalDateTime tempoEstimado;
     private LocalDateTime dataCriacao;
@@ -79,35 +79,35 @@ public class Entrega {
     }
 
     public String getCidadeDestino() {
-        return cidadeDestino;
+        return cidadeDestino.getCidade();
     }
 
     public void setCidadeDestino(String cidadeDestino) {
-        this.cidadeDestino = cidadeDestino;
+        this.cidadeDestino = getCidade();
     }
 
     public String getUfDestino() {
-        return ufDestino;
+        return ufDestino.getCidade();
     }
 
     public void setUfDestino(String ufDestino) {
-        this.ufDestino = ufDestino;
+        this.ufDestino = getCidade();
     }
 
     public String getCidadeOrigem() {
-        return cidadeOrigem;
+        return cidadeOrigem.getCidade();
     }
 
     public void setCidadeOrigem(String cidadeOrigem) {
-        this.cidadeOrigem = cidadeOrigem;
+        this.cidadeOrigem = getCidade();
     }
 
     public String getUfOrigem() {
-        return ufOrigem;
+        return ufOrigem.getCidade();
     }
 
     public void setUfOrigem(String ufOrigem) {
-        this.ufOrigem = ufOrigem;
+        this.ufOrigem = getCidade();
     }
 
     public Cidade getCidade() {
@@ -115,6 +115,9 @@ public class Entrega {
     }
 
     public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
+
+        this.cidade = getCidade();
+        this.cidadeDestino = getCidade();
+        this.cidadeOrigem = getCidade();
     }
 }
