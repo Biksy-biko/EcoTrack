@@ -6,6 +6,8 @@ public class AtualizarMaterialRequest {
     private String nomeMaterial;
     private Double peso;
     private String urlImagem;
+    private String descricao;
+    private String decomposicao;
 
     public String getNomeMaterial() {
         return nomeMaterial;
@@ -29,5 +31,21 @@ public class AtualizarMaterialRequest {
 
     public void setUrlImagem(String urlImagem) {
         this.urlImagem = urlImagem;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDecomposicao() {
+        return decomposicao;
+    }
+
+    public void setDecomposicao(String decomposicao) {
+        this.decomposicao = decomposicao;
     }
 }

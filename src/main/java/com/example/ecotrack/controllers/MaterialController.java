@@ -35,11 +35,6 @@ public class MaterialController {
         return materialRepository.findAll();
     }
 
-    @GetMapping("/{quantidade}")
-    public String QuantidadeMaterial(@PathVariable Long quantidade) {
-        return "A quantidade de material é (quilos):" + quantidade;
-    }
-
     @PostMapping
     public ResponseEntity<CadastrarMaterialResponse> CadastrarMaterial(@RequestBody CadastrarMaterialRequest materialRequest) {
 
@@ -47,6 +42,8 @@ public class MaterialController {
         materialBanco.setNomeMaterial(materialRequest.getNomeMaterial());
         materialBanco.setPeso(materialRequest.getPeso());
         materialBanco.setUrlImagem(materialRequest.getUrlImagem());
+        materialBanco.setDescricao(materialRequest.getDescricao());
+        materialBanco.setDecomposicao(materialRequest.getDecomposicao());
 
         materialRepository.save(materialBanco);
 
@@ -63,6 +60,9 @@ public class MaterialController {
             materialBanco.setNomeMaterial(materialRequest.getNomeMaterial());
             materialBanco.setPeso(materialRequest.getPeso());
             materialBanco.setUrlImagem(materialRequest.getUrlImagem());
+            materialBanco.setDescricao(materialRequest.getDescricao());
+            materialBanco.setDecomposicao(materialRequest.getDecomposicao());
+
 
             materialRepository.save(materialBanco);
             return ResponseEntity.ok(new AtualizarMaterialResponse(materialBanco.getIdMaterial(),"Material atualizado.."));

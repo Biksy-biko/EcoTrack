@@ -8,6 +8,8 @@ public class CadastrarMaterialRequest {
     private String nomeMaterial;
     private String urlImagem;
     private Double peso;
+    private String descricao;
+    private String decomposicao;
 
     public String getNomeMaterial() {
         return nomeMaterial;
@@ -31,5 +33,21 @@ public class CadastrarMaterialRequest {
 
     public void setPeso(Double peso) {
         this.peso = peso;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDecomposicao() {
+        return decomposicao;
+    }
+
+    public void setDecomposicao(String decomposicao) {
+        this.decomposicao = decomposicao;
     }
 }

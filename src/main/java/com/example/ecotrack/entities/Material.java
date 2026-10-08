@@ -14,13 +14,18 @@ public class Material {
     private String nomeMaterial;
     private Double peso;
     private String urlImagem;
+    private String descricao;
+    private String decomposicao;
 
     public Material(){}
 
-    public Material(Long idMaterial, String nomeMaterial, Double peso, String urlImagem){
+    public Material(Long idMaterial, String nomeMaterial, Double peso, String urlImagem, String descricao,String decomposicao){
         this.idMaterial=idMaterial;
         this.nomeMaterial=nomeMaterial;
         this.peso=peso;
+        this.urlImagem=urlImagem;
+        this.descricao=descricao;
+        this.decomposicao=decomposicao;
     }
 
     public Long getIdMaterial(){
@@ -53,5 +58,21 @@ public class Material {
 
     public void setUrlImagem(String urlImagem) {
         this.urlImagem = urlImagem;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDecomposicao() {
+        return decomposicao;
+    }
+
+    public void setDecomposicao(String decomposicao) {
+        this.decomposicao = decomposicao;
     }
 }

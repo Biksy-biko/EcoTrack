@@ -1,9 +1,8 @@
 package com.example.ecotrack.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Cidade {
@@ -14,6 +13,9 @@ public class Cidade {
     private String cidade;
     private String IBGE;
     private String uf;
+
+   /* @OneToMany
+    private Entrega entrega;*/
 
     public Cidade() {
     }

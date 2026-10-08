@@ -4,6 +4,8 @@ import com.example.ecotrack.DTO.EmpresaResponse;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -22,6 +24,14 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "empresa_id", referencedColumnName = "id")
     private Empresa empresa;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "usuario_cursos",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private Set<Curso> cursos= new HashSet<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -101,5 +111,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Set<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(Set<Curso> cursos) {
+        this.cursos = cursos;
     }
 }
