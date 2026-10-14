@@ -21,21 +21,18 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Só executa se a tabela estiver vazia
         if (cidadeRepository.count() == 0) {
             System.out.println("Tabela vazia. Buscando todas as cidades na API do IBGE (isso pode levar alguns segundos)...");
 
             RestTemplate restTemplate = new RestTemplate();
             String url = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios";
 
-            // Faz a requisição HTTP GET para a API
             MunicipioDTO[] municipios = restTemplate.getForObject(url, MunicipioDTO[].class);
 
             if (municipios != null) {
                 List<Cidade> cidades = new ArrayList<>();
 
                 for (MunicipioDTO dto : municipios) {
-                    // Pula registros inválidos da API do IBGE (como as Lagoas no RS) que vêm sem microrregião
                     if (dto.microrregiao() == null || dto.microrregiao().mesorregiao() == null) {
                         continue;
                     }
@@ -48,7 +45,6 @@ public class DataSeeder implements CommandLineRunner {
                     cidades.add(cidade);
                 }
 
-                // Salva todas as 5.570 cidades de uma vez
                 cidadeRepository.saveAll(cidades);
                 System.out.println("Sucesso! " + cidades.size() + " cidades foram cadastradas no banco de dados.");
             }
@@ -57,7 +53,6 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    // --- DTOs (Records) para mapear o JSON da API do IBGE ---
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record MunicipioDTO(Long id, String nome, MicrorregiaoDTO microrregiao) {}

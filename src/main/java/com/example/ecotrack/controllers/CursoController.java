@@ -1,11 +1,9 @@
 package com.example.ecotrack.controllers;
 
-
 import com.example.ecotrack.DTO.*;
 import com.example.ecotrack.entities.Curso;
 import com.example.ecotrack.repository.CursoRepository;
 import com.example.ecotrack.repository.UsuarioRepository;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
