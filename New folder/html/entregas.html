@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f6f4">
+  <title>Entregas | EcoTrack</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/entregas.js" defer></script>
+</head>
+<body>
+  <main class="module-page delivery-page">
+    <header class="module-page-header">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">E</span>EcoTrack</a>
+      <a class="back-link" href="../index.html">Voltar ao dashboard</a>
+    </header>
+    <section class="delivery-content" aria-labelledby="delivery-title">
+      <div class="delivery-heading">
+        <p class="eyebrow">Operação</p>
+        <h1 id="delivery-title">Cadastrar entrega</h1>
+        <p>Informe as cidades e UFs de origem e destino.</p>
+      </div>
+
+      <form id="delivery-form" class="delivery-form" aria-busy="true">
+        <div class="delivery-fields">
+          <fieldset class="delivery-route">
+            <legend>Origem</legend>
+            <div class="delivery-select-row">
+              <div class="delivery-field">
+                <label for="cidade-origem">Cidade</label>
+                <select id="cidade-origem" name="cidadeOrigem" required>
+                  <option value="" selected disabled>Carregando cidades...</option>
+                </select>
+              </div>
+              <div class="delivery-field delivery-state-field">
+                <label for="uf-origem">UF</label>
+                <select id="uf-origem" name="ufOrigem" required>
+                  <option value="" selected disabled>UF</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="delivery-route">
+            <legend>Destino</legend>
+            <div class="delivery-select-row">
+              <div class="delivery-field">
+                <label for="cidade-destino">Cidade</label>
+                <select id="cidade-destino" name="cidadeDestino" required>
+                  <option value="" selected disabled>Carregando cidades...</option>
+                </select>
+              </div>
+              <div class="delivery-field delivery-state-field">
+                <label for="uf-destino">UF</label>
+                <select id="uf-destino" name="ufDestino" required>
+                  <option value="" selected disabled>UF</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="delivery-form-footer">
+          <p id="delivery-status" class="delivery-status" role="status" aria-live="polite" aria-atomic="true">Carregando cidades e UFs...</p>
+          <button id="delivery-submit" class="delivery-submit" type="submit" disabled>Cadastrar Entrega</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

@@ -26,7 +26,6 @@ public class Entrega {
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
     private Cidade cidade;
 
-
     public Entrega(Long idEntrega, LocalDateTime tempoEstimado, LocalDateTime dataEntrega, String cidadeEntrega, String ufDestino, Double cargaTotal){
         this.idEntrega=idEntrega;
         this.tempoEstimado=tempoEstimado;

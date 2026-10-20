@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f6f4">
+  <title>EcoTrack | Visão geral</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="navbar-shell">
+      <a class="brand" href="index.html" aria-label="EcoTrack, início">
+        <span class="brand-mark" aria-hidden="true">E</span>
+        <span>EcoTrack</span>
+      </a>
+
+      <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Abrir menu" aria-controls="primary-navigation" aria-expanded="false">
+        <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+
+      <nav id="primary-navigation" class="primary-navigation" aria-label="Navegação principal">
+        <a class="nav-link is-current" href="index.html" aria-current="page">Visão geral</a>
+        <a class="nav-link" href="html/materiais.html">Materiais</a>
+        <a class="nav-link" href="html/entregas.html">Entregas</a>
+        <a class="nav-link" href="html/pontos-coleta.html">Pontos de coleta</a>
+        <a class="nav-link" href="html/gestores.html">Gestores</a>
+        <a class="nav-link" href="html/empresas.html">Empresas</a>
+        <a class="nav-link" href="html/cursos.html">Cursos</a>
+      </nav>
+
+      <div class="nav-actions">
+        <span id="session-indicator" class="session-indicator">Visitante</span>
+        <a id="login-link" class="nav-auth" href="html/login.html">Entrar</a>
+        <button id="logout-button" class="nav-auth" type="button" hidden>Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-shell">
+    <section class="dashboard-intro" aria-labelledby="dashboard-title">
+      <div>
+        <p class="eyebrow">Painel de controle</p>
+        <h1 id="dashboard-title">Acompanhe o ciclo dos materiais.</h1>
+        <p class="dashboard-description">Uma visão clara das operações de coleta, gestão e destinação.</p>
+      </div>
+      <a class="primary-link" href="#modulos">Explorar módulos <span aria-hidden="true">&#8594;</span></a>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumo do sistema">
+      <div class="summary-item">
+        <span class="summary-value">06</span>
+        <span class="summary-label">áreas de negócio</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-value">25</span>
+        <span class="summary-label">operações no Swagger</span>
+      </div>
+      <div class="summary-item summary-api">
+        <span class="api-indicator" aria-hidden="true"></span>
+        <span><strong>API local</strong><small>localhost:8080</small></span>
+      </div>
+    </section>
+
+    <section id="modulos" class="modules-section" aria-labelledby="modules-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Navegação</p>
+          <h2 id="modules-title">Áreas do EcoTrack</h2>
+        </div>
+        <a class="docs-link" href="http://localhost:8080/swagger-ui/index.html#/" target="_blank" rel="noreferrer">Documentação da API <span aria-hidden="true">&#8599;</span></a>
+      </div>
+
+      <div class="module-grid">
+        <a class="module-card" href="html/materiais.html">
+          <span class="module-index">01 / INVENTÁRIO</span>
+          <h3>Materiais</h3>
+          <p>Cadastros, propriedades e consulta de materiais.</p>
+          <span class="module-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+        <a class="module-card" href="html/entregas.html">
+          <span class="module-index">02 / OPERAÇÃO</span>
+          <h3>Entregas</h3>
+          <p>Registros, rotas de origem e destino, e status.</p>
+          <span class="module-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+        <a class="module-card" href="html/pontos-coleta.html">
+          <span class="module-index">03 / TERRITÓRIO</span>
+          <h3>Pontos de coleta</h3>
+          <p>Consulta de materiais por local ou identificador.</p>
+          <span class="module-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+        <a class="module-card" href="html/gestores.html">
+          <span class="module-index">04 / ACESSO</span>
+          <h3>Gestores</h3>
+          <p>Cadastros, empresas vinculadas e status de usuários.</p>
+          <span class="module-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+        <a class="module-card" href="html/empresas.html">
+          <span class="module-index">05 / ORGANIZAÇÕES</span>
+          <h3>Empresas</h3>
+          <p>Cadastro e consulta de empresas e seus gestores.</p>
+          <span class="module-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+        <a class="module-card" href="html/cursos.html">
+          <span class="module-index">06 / FORMAÇÃO</span>
+          <h3>Cursos</h3>
+          <p>Catálogo de cursos e matrículas de gestores.</p>
+          <span class="module-arrow" aria-hidden="true">&#8594;</span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="dashboard-footer">EcoTrack <span>·</span> Gestão de materiais e operações</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f6f4">
+  <title>Materiais | EcoTrack</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/materiais.js" defer></script>
+</head>
+<body>
+  <main class="module-page materials-page">
+    <header class="module-page-header">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">E</span>EcoTrack</a>
+      <a class="back-link" href="../index.html">Voltar ao dashboard</a>
+    </header>
+    <section class="materials-content" aria-labelledby="materials-title">
+      <div class="materials-heading">
+        <div>
+          <p class="eyebrow">Guia de descarte</p>
+          <h1 id="materials-title">Conheça os materiais</h1>
+          <p class="materials-intro">Explore um material por vez e use as setas para conhecer os próximos.</p>
+        </div>
+        <button id="refresh-materials" class="refresh-button" type="button" aria-label="Atualizar materiais" title="Atualizar materiais">
+          <span aria-hidden="true">&#8635;</span>
+        </button>
+      </div>
+
+      <p id="materials-status" class="materials-status" role="status" aria-live="polite" aria-atomic="true">Carregando materiais...</p>
+
+      <div class="materials-layout" aria-busy="true">
+        <section id="material-details" class="material-details" aria-labelledby="material-name" aria-live="polite">
+          <p class="eyebrow">Material <span id="material-counter">0 / 0</span></p>
+          <h2 id="material-name">Aguardando materiais</h2>
+          <p id="material-description" class="material-description"></p>
+          <dl class="material-facts">
+            <div>
+              <dt>Tempo de decomposição</dt>
+              <dd id="material-decomposition">-</dd>
+            </div>
+            <div>
+              <dt>Peso médio</dt>
+              <dd id="material-weight">-</dd>
+            </div>
+          </dl>
+        </section>
+
+        <aside class="material-preview" aria-label="Imagem do material selecionado">
+          <div class="preview-image-frame">
+            <img id="preview-image" alt="" hidden>
+            <p id="preview-placeholder" class="preview-placeholder">A imagem aparecerá aqui</p>
+            <span class="static-overlay" aria-hidden="true"></span>
+            <button id="previous-material" class="carousel-arrow carousel-arrow-previous" type="button" aria-label="Material anterior" title="Material anterior" disabled>&#8249;</button>
+            <button id="next-material" class="carousel-arrow carousel-arrow-next" type="button" aria-label="Próximo material" title="Próximo material" disabled>&#8250;</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

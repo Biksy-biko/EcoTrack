@@ -1,5 +1,7 @@
 package com.example.ecotrack.DTO;
 
+import jakarta.persistence.PrePersist;
+
 import java.time.LocalDateTime;
 
 public class CadastrarEntregaRequest {

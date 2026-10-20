@@ -38,8 +38,7 @@ public class EntregaController {
         entregaBanco.setUfOrigem(entregaRequest.getUfOrigem());
         entregaBanco.setCidadeDestino(entregaRequest.getCidadeDestino());
         entregaBanco.setUfDestino(entregaRequest.getUfDestino());
-        entregaBanco.setCargaTotal(entregaRequest.getCargaTotal());
-        entregaBanco.setTempoEstimado(entregaRequest.getTempoEstimado());
+        entregaRequest.setTempoEstimado((LocalDateTime.now().plusHours(2)));
 
         if (entregaRequest.getTempoEstimado().isBefore(LocalDateTime.now())){
             return ResponseEntity.badRequest()
@@ -81,14 +80,4 @@ public class EntregaController {
         }return ResponseEntity.notFound().build();
     }
 }
-
-    /*@GetMapping("/{dataEntrega}")
-    public String DatadaEntrega(@PathVariable Long dataEntrega) {
-        return "Data: "+dataEntrega;
-    }
-
-    @GetMapping("/{quantidadeEntrega}")
-    public String QuantidadeEntregas(@PathVariable Long quantidadeEntrega) {
-        return "Entregas já realziadas: "+quantidadeEntrega;
-    }*/
 

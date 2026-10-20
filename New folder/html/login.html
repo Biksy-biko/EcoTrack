@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f6f4">
+  <title>Entrar | EcoTrack</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/main.js" defer></script>
+</head>
+<body>
+  <main class="page-shell login-shell">
+    <section class="login-card" aria-labelledby="login-title">
+      <a class="login-brand" href="../index.html">
+        <span class="login-brand-mark" aria-hidden="true">E</span>
+        <span>EcoTrack</span>
+      </a>
+      <p class="eyebrow">Acesso seguro</p>
+      <h1 id="login-title">Bem-vindo de volta</h1>
+      <p class="login-copy">Entre com seus dados para continuar.</p>
+      <form id="login-form">
+        <label for="login">Login</label>
+        <input id="login" name="login" type="text" autocomplete="username" placeholder="Seu login" required>
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" required>
+        <button id="submit-button" type="submit">Entrar</button>
+        <p id="login-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

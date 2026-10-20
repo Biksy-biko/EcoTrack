@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestores | EcoTrack</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/main.js" defer></script>
+</head>
+<body>
+  <main class="module-page">
+    <header class="module-page-header">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">E</span>EcoTrack</a>
+      <a class="back-link" href="../index.html">Voltar ao dashboard</a>
+    </header>
+    <section class="module-content">
+      <p class="eyebrow">Módulo</p>
+      <h1>Gestores</h1>
+      <p>Consulte os gestores cadastrados e suas empresas vinculadas.</p>
+
+      <div class="manager-toolbar">
+        <p id="manager-status" class="manager-status" role="status" aria-live="polite" aria-atomic="true">Carregando gestores...</p>
+        <button id="refresh-managers" class="refresh-button" type="button" onclick="loadManagers()" aria-label="Atualizar lista de gestores" title="Atualizar lista">
+          <span aria-hidden="true">&#8635;</span>
+        </button>
+      </div>
+
+      <div class="manager-table-scroll" role="region" aria-label="Tabela de gestores" tabindex="0">
+        <table class="manager-table" aria-describedby="manager-status">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de nascimento</th>
+              <th scope="col">Empresa</th>
+            </tr>
+          </thead>
+          <tbody id="manager-table-body" aria-busy="true"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
