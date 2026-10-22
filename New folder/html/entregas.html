@@ -66,6 +66,43 @@
           <button id="delivery-submit" class="delivery-submit" type="submit" disabled>Cadastrar Entrega</button>
         </div>
       </form>
+
+      <section class="delivery-list" aria-labelledby="delivery-list-title">
+        <div class="delivery-list-heading">
+          <div>
+            <p class="eyebrow">Histórico</p>
+            <h2 id="delivery-list-title">Entregas cadastradas</h2>
+          </div>
+          <button id="refresh-deliveries" class="refresh-button" type="button" aria-label="Atualizar lista de entregas" title="Atualizar lista">
+            <span aria-hidden="true">&#8635;</span>
+          </button>
+        </div>
+
+        <div class="delivery-list-toolbar">
+          <div class="delivery-filters" role="group" aria-label="Filtrar entregas por status">
+            <button class="delivery-filter" type="button" data-delivery-filter="all" aria-pressed="true">Todas</button>
+            <button class="delivery-filter" type="button" data-delivery-filter="delivered" aria-pressed="false">Entregues</button>
+            <button class="delivery-filter" type="button" data-delivery-filter="pending" aria-pressed="false">Pendentes</button>
+            <button class="delivery-filter" type="button" data-delivery-filter="cancelled" aria-pressed="false">Canceladas</button>
+          </div>
+          <p id="deliveries-list-status" class="delivery-list-status" role="status" aria-live="polite" aria-atomic="true">Carregando entregas...</p>
+        </div>
+
+        <div class="delivery-table-scroll" role="region" aria-label="Lista de entregas cadastradas" tabindex="0">
+          <table class="delivery-table" aria-describedby="deliveries-list-status">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Origem</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Status</th>
+                <th scope="col">Cadastro</th>
+              </tr>
+            </thead>
+            <tbody id="deliveries-table-body" aria-busy="true"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 </body>

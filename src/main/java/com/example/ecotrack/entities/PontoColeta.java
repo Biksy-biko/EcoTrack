@@ -1,9 +1,6 @@
 package com.example.ecotrack.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.security.PrivateKey;
 
@@ -15,6 +12,10 @@ public class PontoColeta {
     private Long idPonto;
     private String localPonto;
     private String numero;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "entrega_id", nullable = false)
+    private Entrega entrega;
 
     public PontoColeta(){}
 
@@ -34,5 +35,25 @@ public class PontoColeta {
 
     public String getNumero() {
         return this.numero;
+    }
+
+    public void setIdPonto(Long idPonto) {
+        this.idPonto = idPonto;
+    }
+
+    public void setLocalPonto(String localPonto) {
+        this.localPonto = localPonto;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public Entrega getEntrega() {
+        return entrega;
+    }
+
+    public void setEntrega(Entrega entrega) {
+        this.entrega = entrega;
     }
 }

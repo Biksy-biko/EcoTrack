@@ -3,6 +3,7 @@ package com.example.ecotrack.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Entrega {
@@ -21,6 +22,9 @@ public class Entrega {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataEntrega;
     private Double cargaTotal;
+
+    @OneToMany(mappedBy = "entrega")
+    private List<PontoColeta> pontoColeta;
 
     @ManyToOne
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
@@ -120,5 +124,13 @@ public class Entrega {
         this.cidade = getCidade();
         this.cidadeDestino = cidadeDestino;
         this.cidadeOrigem = getCidadeOrigem();
+    }
+
+    public List<PontoColeta> getPontoColeta() {
+        return pontoColeta;
+    }
+
+    public void setPontoColeta(List<PontoColeta> pontoColeta) {
+        this.pontoColeta = pontoColeta;
     }
 }

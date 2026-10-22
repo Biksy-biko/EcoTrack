@@ -13,7 +13,7 @@ const managerStatus = document.querySelector("#manager-status");
 const refreshManagersButton = document.querySelector("#refresh-managers");
 
 function updateSessionDisplay() {
-  const isLoggedIn = sessionStorage.getItem("ecotrack.loggedIn") === "true";
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
 
   if (sessionIndicator) {
     sessionIndicator.textContent = isLoggedIn ? "Sessão ativa" : "Visitante";
@@ -52,10 +52,16 @@ if (loginForm) {
     loginStatus.dataset.state = "";
 
     try {
-      await loginUser({
+      const responseData = await loginUser({
         login: loginInput.value.trim(),
         senha: passwordInput.value
       });
+      const token = responseData?.token;
+      if (typeof token !== "string" || !token.trim()) {
+        throw new Error("A resposta do login não contém um token válido.");
+      }
+
+      localStorage.setItem("token", token);
       sessionStorage.setItem("ecotrack.loggedIn", "true");
       loginStatus.textContent = "Acesso confirmado. Abrindo o painel...";
       loginStatus.dataset.state = "success";
@@ -73,6 +79,7 @@ if (loginForm) {
 
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
+    localStorage.removeItem("token");
     sessionStorage.removeItem("ecotrack.loggedIn");
     updateSessionDisplay();
   });

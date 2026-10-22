@@ -5,8 +5,14 @@ const destinationCitySelect = document.querySelector("#cidade-destino");
 const destinationStateSelect = document.querySelector("#uf-destino");
 const deliveryStatus = document.querySelector("#delivery-status");
 const deliverySubmit = document.querySelector("#delivery-submit");
+const deliveriesListStatus = document.querySelector("#deliveries-list-status");
+const deliveriesTableBody = document.querySelector("#deliveries-table-body");
+const refreshDeliveriesButton = document.querySelector("#refresh-deliveries");
+const deliveryFilterButtons = Array.from(document.querySelectorAll("[data-delivery-filter]"));
 
 let availablePlaces = [];
+let deliveries = [];
+let activeDeliveryFilter = "all";
 
 function normalizePlace(city, state) {
   if (typeof city !== "string" || typeof state !== "string") {
@@ -103,6 +109,112 @@ function getSelectedPlace(citySelect, stateSelect) {
   return place;
 }
 
+function getDeliveryStatus(delivery) {
+  const rawStatus = String(delivery.status ?? "").trim();
+  const normalizedStatus = rawStatus
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("pt-BR");
+
+  if (["entregue", "delivered", "concluido", "concluida"].includes(normalizedStatus)) {
+    return { filter: "delivered", label: "Entregue" };
+  }
+  if (["pendente", "pending"].includes(normalizedStatus)) {
+    return { filter: "pending", label: "Pendente" };
+  }
+  if (["cancelado", "cancelada", "cancelled"].includes(normalizedStatus)) {
+    return { filter: "cancelled", label: "Cancelada" };
+  }
+
+  return { filter: "other", label: rawStatus || "Não informado" };
+}
+
+function formatDeliveryPlace(city, state) {
+  const parts = [city, state].filter((value) => typeof value === "string" && value.trim());
+  return parts.length ? parts.join(" / ") : "-";
+}
+
+function formatDeliveryDate(value) {
+  if (!value) {
+    return "-";
+  }
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? String(value)
+    : new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(date);
+}
+
+function renderDeliveries() {
+  const visibleDeliveries = deliveries.filter((delivery) => {
+    return activeDeliveryFilter === "all" || getDeliveryStatus(delivery).filter === activeDeliveryFilter;
+  });
+  deliveriesTableBody.replaceChildren();
+
+  if (visibleDeliveries.length === 0) {
+    deliveriesListStatus.textContent = deliveries.length === 0
+      ? "Nenhuma entrega cadastrada."
+      : "Nenhuma entrega encontrada para este status.";
+    deliveriesListStatus.dataset.state = "empty";
+    return;
+  }
+
+  const rows = visibleDeliveries.map((delivery) => {
+    const row = document.createElement("tr");
+    const values = [
+      delivery.idEntrega ?? delivery.id ?? "-",
+      formatDeliveryPlace(delivery.cidadeOrigem, delivery.ufOrigem),
+      formatDeliveryPlace(delivery.cidadeDestino, delivery.ufDestino)
+    ];
+
+    values.forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = String(value);
+      row.append(cell);
+    });
+
+    const statusCell = document.createElement("td");
+    const status = getDeliveryStatus(delivery);
+    const statusLabel = document.createElement("span");
+    statusLabel.className = `delivery-state delivery-state--${status.filter}`;
+    statusLabel.textContent = status.label;
+    statusCell.append(statusLabel);
+    row.append(statusCell);
+
+    const dateCell = document.createElement("td");
+    dateCell.textContent = formatDeliveryDate(delivery.dataCriacao);
+    row.append(dateCell);
+    return row;
+  });
+
+  deliveriesTableBody.replaceChildren(...rows);
+  deliveriesListStatus.textContent = `${visibleDeliveries.length} ${visibleDeliveries.length === 1 ? "entrega encontrada" : "entregas encontradas"}.`;
+  deliveriesListStatus.dataset.state = "success";
+}
+
+async function loadDeliveries() {
+  deliveriesTableBody.setAttribute("aria-busy", "true");
+  deliveriesListStatus.textContent = "Carregando entregas...";
+  deliveriesListStatus.dataset.state = "loading";
+  refreshDeliveriesButton.disabled = true;
+
+  try {
+    const response = await getDeliveries();
+    if (!Array.isArray(response)) {
+      throw new Error("A resposta da API não contém uma lista de entregas.");
+    }
+    deliveries = response;
+    renderDeliveries();
+  } catch (error) {
+    deliveriesTableBody.replaceChildren();
+    deliveriesListStatus.textContent = `Não foi possível carregar entregas. ${error.message}`;
+    deliveriesListStatus.dataset.state = "error";
+  } finally {
+    deliveriesTableBody.setAttribute("aria-busy", "false");
+    refreshDeliveriesButton.disabled = false;
+  }
+}
+
 async function loadCities() {
   deliveryForm.setAttribute("aria-busy", "true");
   deliveryStatus.textContent = "Carregando cidades e UFs...";
@@ -166,6 +278,7 @@ async function submitDelivery(event) {
     deliveryForm.reset();
     deliveryStatus.textContent = "Entrega cadastrada com sucesso.";
     deliveryStatus.dataset.state = "success";
+    await loadDeliveries();
   } catch (error) {
     deliveryStatus.textContent = `Não foi possível cadastrar a entrega. ${error.message}`;
     deliveryStatus.dataset.state = "error";
@@ -176,4 +289,15 @@ async function submitDelivery(event) {
 }
 
 deliveryForm.addEventListener("submit", submitDelivery);
+deliveryFilterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activeDeliveryFilter = button.dataset.deliveryFilter;
+    deliveryFilterButtons.forEach((filterButton) => {
+      filterButton.setAttribute("aria-pressed", String(filterButton === button));
+    });
+    renderDeliveries();
+  });
+});
+refreshDeliveriesButton.addEventListener("click", loadDeliveries);
 loadCities();
+loadDeliveries();
