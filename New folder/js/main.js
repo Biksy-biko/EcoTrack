@@ -61,6 +61,7 @@ if (loginForm) {
         throw new Error("A resposta do login não contém um token válido.");
       }
 
+      sessionStorage.removeItem("ecotrack.authAlertShown");
       localStorage.setItem("token", token);
       sessionStorage.setItem("ecotrack.loggedIn", "true");
       loginStatus.textContent = "Acesso confirmado. Abrindo o painel...";

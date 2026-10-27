@@ -5,19 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Empresas | EcoTrack</title>
   <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/api.js" defer></script>
   <script src="../js/main.js" defer></script>
+  <script src="../js/empresas.js" defer></script>
 </head>
 <body>
-  <main class="module-page">
+  <main class="module-page companies-page">
     <header class="module-page-header">
       <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">E</span>EcoTrack</a>
       <a class="back-link" href="../index.html">Voltar ao dashboard</a>
     </header>
-    <section class="module-content">
-      <p class="eyebrow">Módulo</p>
-      <h1>Empresas</h1>
-      <p>Consulta e cadastro de empresas e vínculos de gestores.</p>
-      <p class="module-note">Estrutura inicial. A listagem e o cadastro serão conectados às rotas de empresas da API.</p>
+    <section class="companies-content">
+      <section class="companies-list-section" aria-labelledby="companies-title">
+        <div class="companies-heading">
+          <div>
+            <p class="eyebrow">Organizações</p>
+            <h1 id="companies-title">Empresas cadastradas</h1>
+          </div>
+          <button id="refresh-companies" class="refresh-button" type="button" aria-label="Atualizar lista de empresas" title="Atualizar lista">
+            <span aria-hidden="true">&#8635;</span>
+          </button>
+        </div>
+        <p id="companies-status" class="companies-status" role="status" aria-live="polite" aria-atomic="true">Carregando empresas...</p>
+        <div id="companies-list" class="company-list" aria-busy="true"></div>
+      </section>
     </section>
   </main>
 </body>

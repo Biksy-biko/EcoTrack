@@ -3,6 +3,7 @@ package com.example.ecotrack.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class Entrega {
     private Double cargaTotal;
 
     @OneToMany(mappedBy = "entrega")
-    private List<PontoColeta> pontoColeta;
+    private List<PontoColeta> pontoColeta = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")

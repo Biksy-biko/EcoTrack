@@ -1,25 +1,14 @@
 const API_BASE_URL = "http://localhost:8080";
-const AUTH_TOKEN_KEY = "token";
-
-function redirectToLogin() {
-  localStorage.removeItem(AUTH_TOKEN_KEY);
-  sessionStorage.removeItem("ecotrack.loggedIn");
-
-  if (window.location.pathname.endsWith("/login.html")) {
-    return;
-  }
-
-  const loginPath = window.location.pathname.includes("/html/")
-    ? "login.html"
-    : "html/login.html";
-  window.location.assign(new URL(loginPath, window.location.href).href);
-}
 
 async function apiFetch(path, options = {}) {
   const url = new URL(`${API_BASE_URL}${path}`);
   const isLoginRequest = url.pathname === "/login";
   const headers = new Headers(options.headers);
-  const token = localStorage.getItem(AUTH_TOKEN_KEY);
+  const token = isLoginRequest ? null : window.EcoTrackAuth.getValidToken();
+
+  if (!isLoginRequest && !token) {
+    throw new Error("É necessário entrar novamente para continuar.");
+  }
 
   if (isLoginRequest) {
     headers.delete("Authorization");
@@ -29,8 +18,8 @@ async function apiFetch(path, options = {}) {
 
   const response = await fetch(url, { ...options, headers });
 
-  if (!isLoginRequest && (response.status === 401 || response.status === 403)) {
-    redirectToLogin();
+  if (!isLoginRequest && response.status === 401) {
+    window.EcoTrackAuth.handleUnauthorized();
   }
 
   return response;
@@ -122,6 +111,36 @@ async function getManagers() {
 
   if (!response.ok) {
     throw new Error(`Falha ao carregar gestores (${response.status}).`);
+  }
+
+  return response.json();
+}
+
+async function getCompanies() {
+  const response = await apiFetch("/empresas", {
+    method: "GET",
+    headers: {
+      accept: "*/*"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Falha ao carregar empresas (${response.status}).`);
+  }
+
+  return response.json();
+}
+
+async function getCompanyUsers(cnpj) {
+  const response = await apiFetch(`/empresas/cnpj/${encodeURIComponent(cnpj)}/usuarios`, {
+    method: "GET",
+    headers: {
+      accept: "*/*"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Falha ao carregar funcionários da empresa (${response.status}).`);
   }
 
   return response.json();
