@@ -6,6 +6,8 @@ import com.example.ecotrack.DTO.LoginRequest;
 import com.example.ecotrack.DTO.LoginResponse;
 import com.example.ecotrack.entities.Usuario;
 import com.example.ecotrack.repository.UsuarioRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,10 @@ import java.time.ZoneOffset;
 
 @RestController
 @RequestMapping("/login")
+@Tag(
+        name = "Login",
+        description = "Classe responsável por controlar o login da API, e criar o token identificador."
+)
 public class LoginController {
 
     @Autowired
@@ -34,6 +40,10 @@ public class LoginController {
     private Long tempo;
 
     @PostMapping
+    @Operation(
+            summary = "Logar",
+            description = "Realiza o login utilizando o cpf do usuário, e a senha pré-definida pelo próprio, para gerar um token de acesso que o permite utilizar todas as outras operações do sistema."
+    )
     public ResponseEntity<LoginResponse> Logar(@RequestBody LoginRequest loginRequest){
 
         if (usuarioRepository.existsUsuarioByCpfAndSenha(loginRequest.getLogin(), loginRequest.getSenha())){
