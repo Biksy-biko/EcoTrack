@@ -4,13 +4,14 @@ public class AtualizarEntregaResponse {
 
     public AtualizarEntregaResponse(){}
 
-    public AtualizarEntregaResponse (Long id, String mensagem){
+    public AtualizarEntregaResponse (Long id, Long idEntrega,String mensagem){
         this.id=id;
         this.mensagem=mensagem;
     }
 
     private Long id;
     private String mensagem;
+    private Long idEntrega;
 
     public Long getId() {
         return id;
@@ -28,4 +29,9 @@ public class AtualizarEntregaResponse {
         this.mensagem = mensagem;
     }
 
+    public Long getIdEntrega(Long idEntrega){return idEntrega;}
+
+    public void setIdEntrega(Long idEntrega) {
+        this.idEntrega = idEntrega;
+    }
 }

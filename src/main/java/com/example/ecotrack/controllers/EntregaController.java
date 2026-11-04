@@ -5,6 +5,7 @@ import com.example.ecotrack.entities.Entrega;
 import com.example.ecotrack.entities.Material;
 import com.example.ecotrack.entities.Usuario;
 import com.example.ecotrack.repository.EntregaRepository;
+import com.example.ecotrack.utils.CodigoRastreioUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static com.example.ecotrack.utils.CodigoRastreioUtils.*;
 
 @RestController
 @RequestMapping("/entregas")
@@ -52,6 +57,18 @@ public class EntregaController {
     public ResponseEntity<CadastrarEntregaResponse> RegistrarEntrega (@RequestBody CadastrarEntregaRequest entregaRequest) {
 
         Entrega entregaBanco = new Entrega();
+
+        if (entregaRequest.getCodigoRastreio()==null;)
+        String randomPart = IntStream.range(0, CODE_LENGTH)
+                .map(i -> RANDOM.nextInt(CHAR_POOL.length()))
+                .mapToObj(CHAR_POOL::charAt)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+
+        return "ENT-" + randomPart;
+
+
+        entregaBanco.setCodigoRastreio();
         entregaBanco.setCidadeOrigem(entregaRequest.getCidadeOrigem());
         entregaBanco.setUfOrigem(entregaRequest.getUfOrigem());
         entregaBanco.setCidadeDestino(entregaRequest.getCidadeDestino());
@@ -100,7 +117,7 @@ public class EntregaController {
             entregaBanco.setStatus("Entregue");
             entregaBanco.setDataEntrega(LocalDateTime.now());
             entregaRepository.save(entregaBanco);
-            return ResponseEntity.ok(new AtualizarEntregaResponse(entregaBanco.getIdEntrega(),"Entrega Finalizada."));
+            return ResponseEntity.ok(new AtualizarEntregaResponse(entregaBanco.getIdEntrega(),entregaBanco.getIdEntrega(),"Entrega Finalizada."));
 
 
         }return ResponseEntity.notFound().build();

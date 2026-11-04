@@ -3,6 +3,8 @@ package com.example.ecotrack.entities;
 import jakarta.persistence.*;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class PontoColeta {
@@ -13,9 +15,8 @@ public class PontoColeta {
     private String localPonto;
     private String numero;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entrega_id", nullable = false)
-    private Entrega entrega;
+    @ManyToMany(mappedBy = "pontoColeta")
+    private List<Entrega> entrega = new ArrayList<>();
 
     public PontoColeta(){}
 
@@ -49,11 +50,11 @@ public class PontoColeta {
         this.numero = numero;
     }
 
-    public Entrega getEntrega() {
+    public List<Entrega> getEntrega() {
         return entrega;
     }
 
-    public void setEntrega(Entrega entrega) {
+    public void setEntrega(List<Entrega> entrega) {
         this.entrega = entrega;
     }
 }

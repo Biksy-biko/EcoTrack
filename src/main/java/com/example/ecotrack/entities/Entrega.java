@@ -13,6 +13,7 @@ public class Entrega {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEntrega;
 
+    private String codigoRastreio;
     private String cidadeOrigem;
     private String ufOrigem;
     private String cidadeDestino;
@@ -24,7 +25,12 @@ public class Entrega {
     private LocalDateTime dataEntrega;
     private Double cargaTotal;
 
-    @OneToMany(mappedBy = "entrega")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable (
+            name = "pontos_entrega",
+            joinColumns = @JoinColumn(name = "entrega_id"),
+            inverseJoinColumns = @JoinColumn(name = "ponto_coleta_id")
+    )
     private List<PontoColeta> pontoColeta = new ArrayList<>();
 
     @ManyToOne
@@ -133,5 +139,13 @@ public class Entrega {
 
     public void setPontoColeta(List<PontoColeta> pontoColeta) {
         this.pontoColeta = pontoColeta;
+    }
+
+    public String getCodigoRastreio() {
+        return codigoRastreio;
+    }
+
+    public void setCodigoRastreio(String codigoRastreio) {
+        this.codigoRastreio = codigoRastreio;
     }
 }
