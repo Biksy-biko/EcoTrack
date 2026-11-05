@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface EntregaRepository extends JpaRepository<Entrega, Long> {
 
-    Optional<List<Entrega>> getEntregasByIdEntrega(Long idEntrega);
+    boolean existsByCodigoRastreio(String codigoRastreio);
     
+    Optional<List<Entrega>> getEntregasByIdEntrega(Long idEntrega);
 }

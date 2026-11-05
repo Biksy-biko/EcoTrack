@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,18 +58,6 @@ public class EntregaController {
     public ResponseEntity<CadastrarEntregaResponse> RegistrarEntrega (@RequestBody CadastrarEntregaRequest entregaRequest) {
 
         Entrega entregaBanco = new Entrega();
-
-        if (entregaRequest.getCodigoRastreio()==null;)
-        String randomPart = IntStream.range(0, CODE_LENGTH)
-                .map(i -> RANDOM.nextInt(CHAR_POOL.length()))
-                .mapToObj(CHAR_POOL::charAt)
-                .map(String::valueOf)
-                .collect(Collectors.joining());
-
-        return "ENT-" + randomPart;
-
-
-        entregaBanco.setCodigoRastreio();
         entregaBanco.setCidadeOrigem(entregaRequest.getCidadeOrigem());
         entregaBanco.setUfOrigem(entregaRequest.getUfOrigem());
         entregaBanco.setCidadeDestino(entregaRequest.getCidadeDestino());
@@ -79,6 +68,13 @@ public class EntregaController {
             return ResponseEntity.badRequest()
                     .body(new CadastrarEntregaResponse(null,"Sem entregas para o passado, viajante do tempo!"));
         }
+
+        String codigoRastreio;
+        do {
+            codigoRastreio = CodigoRastreioUtils.gerarCodigo();
+        }while (entregaRepository.existsByCodigoRastreio(codigoRastreio));
+
+        entregaBanco.setCodigoRastreio(codigoRastreio);
 
         entregaBanco.setStatus("Pendente");
         entregaBanco.setDataCriacao(LocalDateTime.now());
