@@ -771,15 +771,88 @@ button:disabled {
 }
 
 .company-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.company-card-heading {
+  margin: 0;
+}
+
+.company-card-toggle {
   display: flex;
+  width: 100%;
   min-height: 94px;
   align-items: center;
   justify-content: space-between;
-  gap: 22px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
+  gap: 18px;
+  border: 0;
   padding: 17px 22px;
-  background: var(--surface);
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.company-card-toggle:hover {
+  background: #f8faf8;
+}
+
+.company-card-toggle:focus-visible {
+  outline: 3px solid rgb(23 107 83 / 24%);
+  outline-offset: -3px;
+}
+
+.company-accordion-indicator {
+  flex: 0 0 10px;
+  width: 10px;
+  height: 10px;
+  margin-left: 2px;
+  border-right: 2px solid var(--green-dark);
+  border-bottom: 2px solid var(--green-dark);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 150ms ease;
+}
+
+.company-card-toggle[aria-expanded="true"] .company-accordion-indicator {
+  transform: rotate(225deg) translate(-2px, -1px);
+}
+
+.company-employees-panel {
+  border-top: 1px solid var(--line);
+  padding: 2px 22px 14px;
+}
+
+.company-employees-panel[hidden] {
+  display: none;
+}
+
+.company-employees-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.company-employees-list li {
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.company-employees-list li:last-child {
+  border-bottom: 0;
+}
+
+.company-employees-message {
+  margin: 12px 0 2px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 .company-card-copy {
@@ -829,14 +902,19 @@ button:disabled {
     padding-top: 32px;
   }
 
-  .company-card {
+  .company-card-toggle {
     align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
     padding: 16px;
   }
 
   .company-employee-count {
-    flex-basis: 100px;
+    flex-basis: 94px;
+  }
+
+  .company-employees-panel {
+    padding-right: 16px;
+    padding-left: 16px;
   }
 }
 

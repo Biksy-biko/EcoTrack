@@ -14,14 +14,27 @@ function renderCompanies(companies) {
   const sortedCompanies = [...companies].sort((first, second) => {
     return String(first.nomeFantasia || "").localeCompare(String(second.nomeFantasia || ""), "pt-BR");
   });
-  const cards = sortedCompanies.map((company) => {
+  const cards = sortedCompanies.map((company, index) => {
     const card = document.createElement("article");
     card.className = "company-card";
+
+    const heading = document.createElement("h2");
+    heading.className = "company-card-heading";
+
+    const toggle = document.createElement("button");
+    toggle.className = "company-card-toggle";
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+
+    const panelId = `company-employees-${index}`;
+    const toggleId = `company-toggle-${index}`;
+    toggle.id = toggleId;
+    toggle.setAttribute("aria-controls", panelId);
 
     const copy = document.createElement("div");
     copy.className = "company-card-copy";
 
-    const name = document.createElement("h2");
+    const name = document.createElement("span");
     name.className = "company-card-name";
     name.textContent = company.nomeFantasia || "Nome fantasia não informado";
 
@@ -40,7 +53,45 @@ function renderCompanies(companies) {
     const countLabel = document.createElement("span");
     countLabel.textContent = hasCount ? "funcionários" : "contagem indisponível";
     employeeCount.append(count, countLabel);
-    card.append(copy, employeeCount);
+
+    const indicator = document.createElement("span");
+    indicator.className = "company-accordion-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    toggle.append(copy, employeeCount, indicator);
+    heading.append(toggle);
+
+    const panel = document.createElement("div");
+    panel.className = "company-employees-panel";
+    panel.id = panelId;
+    panel.setAttribute("role", "region");
+    panel.setAttribute("aria-labelledby", toggleId);
+    panel.hidden = true;
+
+    if (Array.isArray(company.employees) && company.employees.length > 0) {
+      const employeeList = document.createElement("ul");
+      employeeList.className = "company-employees-list";
+      company.employees.forEach((employee) => {
+        const employeeItem = document.createElement("li");
+        employeeItem.textContent = employee.nome || "Nome não informado";
+        employeeList.append(employeeItem);
+      });
+      panel.append(employeeList);
+    } else {
+      const panelMessage = document.createElement("p");
+      panelMessage.className = "company-employees-message";
+      panelMessage.textContent = Array.isArray(company.employees)
+        ? "Nenhum funcionário vinculado a esta empresa."
+        : "Não foi possível carregar os funcionários desta empresa. Atualize a lista para tentar novamente.";
+      panel.append(panelMessage);
+    }
+
+    toggle.addEventListener("click", () => {
+      const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isExpanded));
+      panel.hidden = isExpanded;
+    });
+
+    card.append(heading, panel);
     return card;
   });
 
@@ -63,17 +114,21 @@ async function loadCompanies() {
 
     const companiesWithCounts = await Promise.all(companies.map(async (company) => {
       if (!company.cnpj) {
-        return { ...company, employeeCount: null };
+        return { ...company, employeeCount: null, employees: null };
       }
 
       try {
         const users = await getCompanyUsers(company.cnpj);
+        if (!Array.isArray(users)) {
+          return { ...company, employeeCount: null, employees: null };
+        }
         return {
           ...company,
-          employeeCount: Array.isArray(users) ? users.length : null
+          employeeCount: users.length,
+          employees: users
         };
       } catch {
-        return { ...company, employeeCount: null };
+        return { ...company, employeeCount: null, employees: null };
       }
     }));
 

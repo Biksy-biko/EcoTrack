@@ -9,7 +9,6 @@ public class CadastrarEntregaResponse {
         this.mensagem=mensagem;
     }
 
-
     private Long idEntrega;
     private String mensagem;
 

@@ -2,7 +2,6 @@ package com.example.ecotrack.entities;
 
 import jakarta.persistence.*;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,42 +11,47 @@ public class PontoColeta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPonto;
-    private String localPonto;
-    private String numero;
+    private String cidadePonto;
+    private String ufPonto;
+    private String codPonto;
 
     @ManyToMany(mappedBy = "pontoColeta")
     private List<Entrega> entrega = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "cidade_id", referencedColumnName = "id")
+    private Cidade cidade;
+
     public PontoColeta(){}
 
-    public PontoColeta (Long id, String localPonto, String numero){
+    public PontoColeta (Long id, String cidadePonto, String codPonto){
         this.idPonto = id;
-        this.localPonto = localPonto;
-        this.numero = numero;
+        this.cidadePonto = cidadePonto;
+        this.codPonto = codPonto;
     }
 
     public Long getIdPonto(){
         return this.idPonto;
     }
 
-    public String getLocalPonto() {
-        return this.localPonto;
+    public String getCidadePonto() {
+        return this.cidadePonto;
     }
 
-    public String getNumero() {
-        return this.numero;
+    public String getCodPonto() {
+        return this.codPonto;
     }
 
     public void setIdPonto(Long idPonto) {
         this.idPonto = idPonto;
     }
 
-    public void setLocalPonto(String localPonto) {
-        this.localPonto = localPonto;
+    public void setCidadePonto(String cidadePonto) {
+        this.cidadePonto = cidadePonto;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setCodPonto(String codPonto) {
+        this.codPonto = codPonto;
     }
 
     public List<Entrega> getEntrega() {
@@ -56,5 +60,21 @@ public class PontoColeta {
 
     public void setEntrega(List<Entrega> entrega) {
         this.entrega = entrega;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUfPonto() {
+        return ufPonto;
+    }
+
+    public void setUfPonto(String ufPonto) {
+        this.ufPonto = ufPonto;
     }
 }

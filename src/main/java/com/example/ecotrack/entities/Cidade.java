@@ -2,6 +2,7 @@ package com.example.ecotrack.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,8 @@ public class Cidade {
     private String IBGE;
     private String uf;
 
-   /* @OneToMany
-    private Entrega entrega;*/
+    @OneToMany(mappedBy = "cidade")
+    private List<PontoColeta> pontosColeta = new ArrayList<>();
 
     public Cidade() {
     }
@@ -52,5 +53,19 @@ public class Cidade {
         this.uf = uf;
     }
 
+    public String getNome() {
+        return nome;
+    }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<PontoColeta> getPontosColeta() {
+        return pontosColeta;
+    }
+
+    public void setPontosColeta(List<PontoColeta> pontosColeta) {
+        this.pontosColeta = pontosColeta;
+    }
 }
