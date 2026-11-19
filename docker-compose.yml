@@ -1,0 +1,27 @@
+services:
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: banco_ecotrack
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=postgressql
+    volumes:
+      - postgres-data-local:/var/lib/postgresql/data
+
+  api-spring:
+    container_name: ecotrak-api
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://banco_ecotrack:5432/postgressql
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
+    depends_on:
+      - postgres-db
+
+volumes:
+  postgres-data-local:
