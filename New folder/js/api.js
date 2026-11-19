@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "ecotrack-nqgh.onrender.com";
 
 async function apiFetch(path, options = {}) {
   const url = new URL(`${API_BASE_URL}${path}`);
