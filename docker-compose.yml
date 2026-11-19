@@ -5,9 +5,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=postgressql
+      - POSTGRES_USER=ecotrack_77as_user
+      - POSTGRES_PASSWORD=Dyq8gxsPRpWfFXlQBrdm83jbnYAh0OsP
+      - POSTGRES_DB=dpg-dbv29lgm7kps73a1c810-a.oregon-postgres.render.com
     volumes:
       - postgres-data-local:/var/lib/postgresql/data
 
@@ -17,9 +17,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://banco_ecotrack:5432/postgressql
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-dbv29lgm7kps73a1c810-a.oregon-postgres.render.com/ecotrack_77as
+      - SPRING_DATASOURCE_USERNAME=ecotrack_77as_user
+      - SPRING_DATASOURCE_PASSWORD=Dyq8gxsPRpWfFXlQBrdm83jbnYAh0OsP
     depends_on:
       - postgres-db
 
