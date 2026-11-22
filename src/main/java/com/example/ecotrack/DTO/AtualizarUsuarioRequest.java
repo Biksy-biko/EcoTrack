@@ -9,7 +9,6 @@ public class AtualizarUsuarioRequest {
     private String cpf;
     private String dataNascimento;
     private String senha;
-    private String status;
     private Long empresa_id;
 
     public String getNome() {
@@ -42,14 +41,6 @@ public class AtualizarUsuarioRequest {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Long getEmpresa_id() {

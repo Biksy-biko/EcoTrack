@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f6f4">
+  <title>Cadastro de gestor | EcoTrack</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/api.js" defer></script>
+  <script src="../js/cadastro-gestores.js" defer></script>
+</head>
+<body>
+  <main class="page-shell login-shell register-shell">
+    <section class="login-card register-card" aria-labelledby="register-title">
+      <a class="login-brand" href="../index.html">
+        <span class="login-brand-mark" aria-hidden="true">E</span>
+        <span>EcoTrack</span>
+      </a>
+      <p class="eyebrow">Nova conta</p>
+      <h1 id="register-title">Cadastro de gestor</h1>
+      <p class="login-copy">Preencha seus dados para criar uma conta de gestor.</p>
+      <form id="manager-registration-form">
+        <label for="manager-name">Nome</label>
+        <input id="manager-name" name="nome" type="text" autocomplete="name" required>
+
+        <label for="manager-cpf">CPF</label>
+        <input id="manager-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" required>
+
+        <label for="manager-birth-date">Data de nascimento</label>
+        <input id="manager-birth-date" name="dataNascimento" type="date" autocomplete="bday" required>
+
+        <label for="manager-password">Senha</label>
+        <input id="manager-password" name="senha" type="password" autocomplete="new-password" required>
+
+        <label for="manager-company">Empresa</label>
+        <select id="manager-company" name="empresa_id" aria-describedby="companies-status" required disabled>
+          <option value="" selected disabled>Carregando empresas...</option>
+        </select>
+        <p id="companies-status" class="form-status" role="status" aria-live="polite" aria-atomic="true">Carregando empresas...</p>
+
+        <button id="submit-button" type="submit" disabled>Cadastrar gestor</button>
+        <p id="registration-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      </form>
+      <p class="login-copy registration-login-link">Já tem uma conta? <a href="login.html">Ir para o login</a></p>
+    </section>
+  </main>
+</body>
+</html>

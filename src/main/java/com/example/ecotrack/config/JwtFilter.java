@@ -27,7 +27,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String caminho = request.getRequestURI();
 
+        boolean isCadastroGestorPublico = caminho.equals("/gestores") && request.getMethod().equalsIgnoreCase("POST");
+
         if(caminho.equals("/login") ||
+                isCadastroGestorPublico ||
                 caminho.startsWith("/swagger-ui") ||
                 caminho.startsWith("/webjars") ||
                 caminho.startsWith("/swagger-resources") ||

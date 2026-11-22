@@ -30,6 +30,7 @@ body {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -129,6 +130,7 @@ label span {
 }
 
 input,
+select,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -139,6 +141,7 @@ textarea {
 }
 
 input:focus,
+select:focus,
 textarea:focus,
 button:focus-visible {
   outline: 3px solid rgb(23 107 83 / 24%);
@@ -302,6 +305,10 @@ button:disabled {
   padding: 32px 0;
 }
 
+.page-shell.register-shell {
+  width: min(100% - 32px, 520px);
+}
+
 .login-card {
   width: 100%;
   padding: 40px;
@@ -310,6 +317,11 @@ button:disabled {
   background: var(--surface);
   box-shadow: var(--shadow);
   animation: arrive 500ms ease-out both;
+}
+
+.register-card {
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
 .login-brand {
@@ -354,6 +366,29 @@ button:disabled {
 
 #login-form input {
   min-height: 46px;
+}
+
+#manager-registration-form label {
+  margin: 15px 0 7px;
+}
+
+#manager-registration-form input {
+  min-height: 44px;
+}
+
+#manager-registration-form[aria-busy="true"] {
+  cursor: progress;
+}
+
+.registration-login-link {
+  margin: 22px 0 0;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.registration-login-link a {
+  color: var(--green-dark);
+  font-weight: 700;
 }
 
 #login-form[aria-busy="true"] {

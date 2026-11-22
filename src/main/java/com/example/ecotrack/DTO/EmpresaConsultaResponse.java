@@ -4,6 +4,7 @@ import com.example.ecotrack.entities.Empresa;
 
 public class EmpresaConsultaResponse {
 
+    private Long id;
     private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
@@ -13,6 +14,7 @@ public class EmpresaConsultaResponse {
     }
 
     public EmpresaConsultaResponse(Empresa empresa){
+        this.id = empresa.getId();
         this.cnpj = empresa.getCnpj();
         this.razaoSocial = empresa.getRazaoSocial();
         this.nomeFantasia = empresa.getNomeFantasia();
@@ -21,6 +23,14 @@ public class EmpresaConsultaResponse {
 
     public String getCnpj() {
         return cnpj;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCnpj(String cnpj) {
