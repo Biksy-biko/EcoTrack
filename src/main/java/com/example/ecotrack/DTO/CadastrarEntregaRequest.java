@@ -18,6 +18,7 @@ public class CadastrarEntregaRequest {
     private LocalDateTime tempoEstimado;
     private Long idEntrega;
     private List<Long> idPonto;
+    private List<PontoColetaRequest> pontosColeta;
 
     public CadastrarEntregaRequest(Long idEntrega, List<Long> idPonto) {
         this.idEntrega = idEntrega;
@@ -94,5 +95,13 @@ public class CadastrarEntregaRequest {
 
     public void setCodigoRastreio(String codigoRastreio) {
         this.codigoRastreio = codigoRastreio;
+    }
+
+    public List<PontoColetaRequest> getPontosColeta() {
+        return pontosColeta;
+    }
+
+    public void setPontosColeta(List<PontoColetaRequest> pontosColeta) {
+        this.pontosColeta = pontosColeta;
     }
 }

@@ -13,14 +13,15 @@ public class PontoColeta {
     private Long idPonto;
     private String cidadePonto;
     private String ufPonto;
+    private String logradouro;
     private String codPonto;
 
     @ManyToMany(mappedBy = "pontoColeta")
     private List<Entrega> entrega = new ArrayList<>();
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
-    private Cidade cidade;
+    private Cidade cidade;*/
 
     public PontoColeta(){}
 
@@ -62,13 +63,13 @@ public class PontoColeta {
         this.entrega = entrega;
     }
 
-    public Cidade getCidade() {
+    /*public Cidade getCidade() {
         return cidade;
     }
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
-    }
+    }*/
 
     public String getUfPonto() {
         return ufPonto;
@@ -76,5 +77,13 @@ public class PontoColeta {
 
     public void setUfPonto(String ufPonto) {
         this.ufPonto = ufPonto;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 }

@@ -20,7 +20,7 @@
       <div class="delivery-heading">
         <p class="eyebrow">Operação</p>
         <h1 id="delivery-title">Cadastrar entrega</h1>
-        <p>Informe as cidades e UFs de origem e destino.</p>
+        <p>Informe a rota, a carga e os pontos de coleta da entrega.</p>
       </div>
 
       <form id="delivery-form" class="delivery-form" aria-busy="true">
@@ -62,9 +62,49 @@
           </fieldset>
         </div>
 
+        <div class="delivery-load-field">
+          <label for="carga-total">Carga total</label>
+          <input id="carga-total" name="cargaTotal" type="number" min="0" step="any" inputmode="decimal" required>
+          <p class="delivery-help">O código de rastreio é gerado automaticamente pelo backend.</p>
+        </div>
+
+        <fieldset class="delivery-points">
+          <legend>Pontos de coleta</legend>
+          <p class="delivery-help">Informe o CEP para preencher o endereço e adicione o ponto à entrega.</p>
+          <div class="delivery-point-cep-row">
+            <div class="delivery-field">
+              <label for="point-cep">CEP</label>
+              <input id="point-cep" type="text" inputmode="numeric" autocomplete="postal-code" aria-describedby="point-cep-status">
+            </div>
+            <button id="add-delivery-point" class="delivery-point-add" type="button" aria-label="Adicionar ponto de coleta" title="Adicionar ponto de coleta" disabled>+</button>
+          </div>
+          <p id="point-cep-status" class="delivery-point-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+          <div class="delivery-point-fields">
+            <div class="delivery-field">
+              <label for="point-city">Cidade do ponto</label>
+              <input id="point-city" type="text" autocomplete="address-level2" disabled>
+            </div>
+            <div class="delivery-field">
+              <label for="point-state">UF do ponto</label>
+              <input id="point-state" type="text" maxlength="2" autocomplete="address-level1" disabled>
+            </div>
+            <div class="delivery-field delivery-point-street">
+              <label for="point-street">Logradouro</label>
+              <input id="point-street" type="text" autocomplete="street-address" disabled>
+            </div>
+          </div>
+
+          <div class="delivery-points-added">
+            <h3>Pontos adicionados</h3>
+            <p id="delivery-points-status" class="delivery-point-status" role="status" aria-live="polite" aria-atomic="true">Nenhum ponto adicionado.</p>
+            <ul id="delivery-points-list" class="delivery-points-list"></ul>
+          </div>
+        </fieldset>
+
         <div class="delivery-form-footer">
           <p id="delivery-status" class="delivery-status" role="status" aria-live="polite" aria-atomic="true">Carregando cidades e UFs...</p>
-          <button id="delivery-submit" class="delivery-submit" type="submit" disabled>Cadastrar Entrega</button>
+          <button id="delivery-submit" class="delivery-submit" type="submit" disabled>Cadastrar entrega</button>
         </div>
       </form>
 
@@ -94,17 +134,33 @@
             <thead>
               <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Código de rastreio</th>
                 <th scope="col">Origem</th>
                 <th scope="col">Destino</th>
+                <th scope="col">Carga total</th>
+                <th scope="col">Pontos</th>
                 <th scope="col">Status</th>
                 <th scope="col">Cadastro</th>
+                <th scope="col">Ações</th>
               </tr>
             </thead>
             <tbody id="deliveries-table-body" aria-busy="true"></tbody>
           </table>
         </div>
+        <p id="delivery-actions-status" class="delivery-list-status" role="status" aria-live="polite" aria-atomic="true"></p>
       </section>
     </section>
   </main>
+
+  <dialog id="delivery-details-dialog" class="delivery-details-dialog" aria-labelledby="delivery-details-title">
+    <div class="delivery-details-heading">
+      <h2 id="delivery-details-title">Detalhes da entrega</h2>
+      <button id="close-delivery-details" class="delivery-details-close" type="button">Fechar</button>
+    </div>
+    <p id="delivery-details-status" class="delivery-list-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <dl id="delivery-details-list" class="delivery-details-list"></dl>
+    <h3>Pontos de coleta</h3>
+    <ul id="delivery-details-points" class="delivery-points-list"></ul>
+  </dialog>
 </body>
 </html>

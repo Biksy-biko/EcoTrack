@@ -3,8 +3,10 @@ package com.example.ecotrack.controllers;
 import com.example.ecotrack.DTO.*;
 import com.example.ecotrack.entities.Entrega;
 import com.example.ecotrack.entities.Material;
+import com.example.ecotrack.entities.PontoColeta;
 import com.example.ecotrack.entities.Usuario;
 import com.example.ecotrack.repository.EntregaRepository;
+import com.example.ecotrack.repository.PontoColetaRepository;
 import com.example.ecotrack.utils.CodigoRastreioUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,6 +33,8 @@ public class EntregaController {
 
     @Autowired
     private EntregaRepository entregaRepository;
+    @Autowired
+    private PontoColetaRepository pontoColetaRepository;
 
     @GetMapping("/{id}")
     @Operation(
@@ -53,7 +58,10 @@ public class EntregaController {
     @PostMapping
     @Operation(
             summary = "Registrar nova entrega",
-            description = "Cadastra uma nova entrega validando o tempo estimado. Se o tempo for no passado, retorna um erro de requisição; caso contrário, salva a entrega com status 'Pendente'."
+            description = "Cadastra uma nova entrega validando o tempo estimado. Se o tempo for no passado, retorna um erro de requisição; caso contrário, salva a entrega com status 'Pendente'\n" +
+                    "Sobre as verificações dos Pontos de Coleta: o primeiro IF identifica se o Ponto de Coleta já existe registrado no banco. O segundo IF, caso o primeiro confirme a não existência de um" +
+                    "registro (null), inicia os processos para que um novo Ponto de Coleta com os dados inseridos pelo usuário sejam registrados.\n Sei bem que isso não faz o menor sentido, corporativamente falando," +
+                    " mas estou utilizando isso como solução temporária para popular a tabela de Pontos de Coleta."
     )
     public ResponseEntity<CadastrarEntregaResponse> RegistrarEntrega (@RequestBody CadastrarEntregaRequest entregaRequest) {
 
@@ -75,9 +83,37 @@ public class EntregaController {
         }while (entregaRepository.existsByCodigoRastreio(codigoRastreio));
 
         entregaBanco.setCodigoRastreio(codigoRastreio);
-
         entregaBanco.setStatus("Pendente");
         entregaBanco.setDataCriacao(LocalDateTime.now());
+
+        ArrayList<Long> listaIdsPontos = new ArrayList<>();
+
+        if (entregaRequest.getPontosColeta() != null) {
+            for (PontoColetaRequest itemPonto : entregaRequest.getPontosColeta()) {
+
+                PontoColeta pontoBanco = pontoColetaRepository.findFirstByCidadePontoAndLogradouro(
+                        itemPonto.getCidadePonto(),
+                        itemPonto.getLogradouro()
+                );
+
+                if (pontoBanco == null) {
+                    pontoBanco = new PontoColeta();
+                    pontoBanco.setCidadePonto(itemPonto.getCidadePonto());
+                    pontoBanco.setUfPonto(itemPonto.getUfPonto());
+                    pontoBanco.setLogradouro(itemPonto.getLogradouro());
+
+                    pontoBanco = pontoColetaRepository.save(pontoBanco);
+                }
+
+                // Guarda o idPonto no ArrayList
+                listaIdsPontos.add(pontoBanco.getIdPonto());
+
+                // Adiciona na lista do @ManyToMany da Entrega (evitando duplicar o mesmo ponto na mesma entrega)
+                if (!entregaBanco.getPontoColeta().contains(pontoBanco)) {
+                    entregaBanco.getPontoColeta().add(pontoBanco);
+                }
+            }
+        }
 
         entregaRepository.save(entregaBanco);
         return ResponseEntity.ok(new CadastrarEntregaResponse(entregaBanco.getIdEntrega(),"Entrega Marcada."));

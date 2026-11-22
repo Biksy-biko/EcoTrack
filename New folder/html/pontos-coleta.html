@@ -6,7 +6,8 @@
   <title>Pontos de coleta | EcoTrack</title>
   <link rel="stylesheet" href="../css/style.css">
   <script src="../js/auth.js" defer></script>
-  <script src="../js/main.js" defer></script>
+  <script src="../js/api.js" defer></script>
+  <script src="../js/pontos-coleta.js" defer></script>
 </head>
 <body>
   <main class="module-page">
@@ -17,8 +18,29 @@
     <section class="module-content">
       <p class="eyebrow">Módulo</p>
       <h1>Pontos de coleta</h1>
-      <p>Consulta de materiais por local ou identificador do ponto.</p>
-      <p class="module-note">Estrutura inicial. A consulta será conectada às rotas de pontos de coleta da API.</p>
+      <p>Cadastre um ponto de coleta informando seu CEP.</p>
+
+      <form id="collection-point-form" class="collection-point-form">
+        <div class="collection-cep-row">
+          <div>
+            <label for="collection-cep">CEP</label>
+            <input id="collection-cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{8}" required aria-describedby="cep-status">
+          </div>
+          <button id="collection-point-submit" class="collection-add-button" type="submit" aria-label="Cadastrar ponto de coleta" title="Cadastrar ponto de coleta" disabled>+</button>
+        </div>
+        <p id="cep-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+        <label for="collection-city">Cidade do ponto</label>
+        <input id="collection-city" name="cidadePonto" type="text" autocomplete="address-level2" required disabled>
+
+        <label for="collection-state">UF do ponto</label>
+        <input id="collection-state" name="ufPonto" type="text" autocomplete="address-level1" maxlength="2" required disabled>
+
+        <label for="collection-street">Logradouro</label>
+        <input id="collection-street" name="logradouro" type="text" autocomplete="street-address" required disabled>
+
+        <p id="collection-point-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      </form>
     </section>
   </main>
 </body>

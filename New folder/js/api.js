@@ -1,4 +1,6 @@
 const API_BASE_URL = "http://localhost:8080";
+const VIA_CEP_BASE_URL = "https://viacep.com.br/ws";
+const COLLECTION_POINTS_API_PATH = "/pontoscoleta";
 
 async function apiFetch(path, options = {}, allowAnonymous = false) {
   const url = new URL(`${API_BASE_URL}${path}`);
@@ -53,6 +55,45 @@ async function createDelivery(delivery) {
     body: JSON.stringify(delivery)
   });
 
+  return readApiResponse(response, "Falha ao cadastrar entrega.");
+}
+
+async function getDeliveryById(id) {
+  const response = await apiFetch(`/entregas/${encodeURIComponent(id)}`, {
+    method: "GET",
+    headers: {
+      accept: "*/*"
+    }
+  });
+
+  return readApiResponse(response, `Falha ao carregar entrega ${id}.`);
+}
+
+async function completeDelivery(id) {
+  const response = await apiFetch(`/entregas/${encodeURIComponent(id)}/status`, {
+    method: "PATCH",
+    headers: {
+      accept: "*/*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ status: "Entregue" })
+  });
+
+  return readApiResponse(response, `Falha ao concluir entrega ${id}.`);
+}
+
+async function cancelDelivery(id) {
+  const response = await apiFetch(`/entregas/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: {
+      accept: "*/*"
+    }
+  });
+
+  return readApiResponse(response, `Falha ao cancelar entrega ${id}.`);
+}
+
+async function readApiResponse(response, fallbackMessage) {
   const responseText = await response.text();
   let responseData = null;
 
@@ -68,7 +109,7 @@ async function createDelivery(delivery) {
     const detail = typeof responseData === "object" && responseData !== null
       ? responseData.message || responseData.error || responseData.detail
       : responseData;
-    throw new Error(detail || `Falha ao cadastrar entrega (${response.status}).`);
+    throw new Error(detail || `${fallbackMessage} (${response.status}).`);
   }
 
   return responseData;
@@ -151,6 +192,66 @@ async function createManager(manager) {
       ? responseData.message || responseData.error || responseData.detail
       : responseData;
     throw new Error(detail || `Falha ao cadastrar gestor (${response.status}).`);
+  }
+
+  return responseData;
+}
+
+async function getAddressByCep(cep) {
+  const normalizedCep = String(cep).replace(/\D/g, "");
+  if (!/^\d{8}$/.test(normalizedCep)) {
+    throw new Error("O CEP deve conter 8 dígitos.");
+  }
+
+  const response = await fetch(`${VIA_CEP_BASE_URL}/${normalizedCep}/json/`, {
+    method: "GET",
+    headers: {
+      accept: "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Falha ao consultar o CEP (${response.status}).`);
+  }
+
+  const address = await response.json();
+  if (address.erro === true) {
+    throw new Error("CEP não encontrado. Confira o número informado.");
+  }
+
+  return address;
+}
+
+async function createCollectionPoint(collectionPoint) {
+  const response = await apiFetch(COLLECTION_POINTS_API_PATH, {
+    method: "POST",
+    headers: {
+      accept: "*/*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      cidadePonto: collectionPoint.cidadePonto,
+      ufPonto: collectionPoint.ufPonto,
+      logradouro: collectionPoint.logradouro
+    })
+  });
+
+  const responseText = await response.text();
+  let responseData = null;
+
+  if (responseText) {
+    try {
+      responseData = JSON.parse(responseText);
+    } catch {
+      responseData = responseText;
+    }
+  }
+
+  if (!response.ok) {
+    const detail = typeof responseData === "object" && responseData !== null
+      ? responseData.message || responseData.error || responseData.detail
+      : responseData;
+    throw new Error(detail || `Falha ao cadastrar ponto de coleta (${response.status}).`);
   }
 
   return responseData;

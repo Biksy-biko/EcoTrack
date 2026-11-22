@@ -11,7 +11,7 @@ Dashboard estático em HTML, CSS e JavaScript puro. Não requer dependências ne
 - Empresas: consulta, cadastro e busca de gestores por CNPJ.
 - Cursos: consulta, cadastro e matrícula.
 
-As telas das áreas estão em `html/`. Gestores consome `GET /gestores`, materiais consome `GET /materiais` e entregas carrega cidades de `GET /cidades` e envia cadastros para `POST /entregas`. O formulário envia cidade/UF de origem e destino; os demais módulos permanecem como estruturas iniciais.
+As telas das áreas estão em `html/`. Gestores consome `GET /gestores`, materiais consome `GET /materiais` e entregas carrega cidades de `GET /cidades`, consulta pontos pelo ViaCEP e envia a rota, a carga e a lista de pontos para `POST /entregas`. O código de rastreio é gerado pelo backend. A tela de entregas também consulta `GET /entregas` e oferece ações em `GET /entregas/{id}`, `PATCH /entregas/{id}/status` e `DELETE /entregas/{id}`. Pontos de coleta envia cadastros para `POST /pontoscoleta`.
 
 ## Login e execução
 

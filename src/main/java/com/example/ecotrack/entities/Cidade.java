@@ -15,8 +15,8 @@ public class Cidade {
     private String IBGE;
     private String uf;
 
-    @OneToMany(mappedBy = "cidade")
-    private List<PontoColeta> pontosColeta = new ArrayList<>();
+    /*@OneToMany(mappedBy = "cidade")
+    private List<PontoColeta> pontosColeta = new ArrayList<>();*/
 
     public Cidade() {
     }
@@ -61,11 +61,11 @@ public class Cidade {
         this.nome = nome;
     }
 
-    public List<PontoColeta> getPontosColeta() {
+    /*public List<PontoColeta> getPontosColeta() {
         return pontosColeta;
     }
 
     public void setPontosColeta(List<PontoColeta> pontosColeta) {
         this.pontosColeta = pontosColeta;
-    }
+    }*/
 }

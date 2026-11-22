@@ -10,7 +10,11 @@ import java.util.Optional;
 @Repository
 public interface PontoColetaRepository extends JpaRepository<PontoColeta, Long> {
 
-    boolean existsByIdPonto(String IdPonto);
+    boolean existsByCodPonto(String codPonto);
+
+    boolean existsByCidadePontoAndLogradouroIgnoreCase(String cidadePonto, String logradouro);
 
     Optional<List<PontoColeta>> getPontoColetaByIdPonto(Long idPonto);
+
+    PontoColeta findFirstByCidadePontoAndLogradouro(String cidadePonto, String logradouro);
 }

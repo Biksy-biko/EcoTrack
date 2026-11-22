@@ -6,12 +6,12 @@ public class PontoColetaRequest {
 
     private String cidadePonto;
     private String ufPonto;
-    private String codPonto;
+    private String logradouro;
 
-    public PontoColetaRequest(String cidadePonto, String ufPonto, String codPonto) {
+    public PontoColetaRequest(String cidadePonto, String ufPonto,String logradouro, String codPonto) {
         this.cidadePonto = cidadePonto;
         this.ufPonto = ufPonto;
-        this.codPonto = codPonto;
+        this.logradouro = logradouro;
     }
 
     public String getCidadePonto() {
@@ -30,11 +30,11 @@ public class PontoColetaRequest {
         this.ufPonto = ufPonto;
     }
 
-    public String getCodPonto() {
-        return codPonto;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setCodPonto(String codPonto) {
-        this.codPonto = codPonto;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 }
