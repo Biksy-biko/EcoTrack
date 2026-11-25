@@ -34,8 +34,12 @@ public class Entrega {
     private List<PontoColeta> pontoColeta = new ArrayList<>();
 
     @ManyToOne
+    @JoinColumn(name = "empresa_id", referencedColumnName = "id")
+    private Empresa empresa;
+
+    /*@ManyToOne
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
-    private Cidade cidade;
+    private Cidade cidade;*/
 
     public Entrega(Long idEntrega, LocalDateTime tempoEstimado, LocalDateTime dataEntrega, String cidadeEntrega, String ufDestino, Double cargaTotal){
         this.idEntrega=idEntrega;
@@ -122,7 +126,7 @@ public class Entrega {
         this.ufOrigem = ufOrigem;
     }
 
-    public Cidade getCidade() {
+    /*public Cidade getCidade() {
         return cidade;
     }
 
@@ -131,7 +135,7 @@ public class Entrega {
         this.cidade = getCidade();
         this.cidadeDestino = cidadeDestino;
         this.cidadeOrigem = getCidadeOrigem();
-    }
+    }*/
 
     public List<PontoColeta> getPontoColeta() {
         return pontoColeta;
@@ -147,5 +151,13 @@ public class Entrega {
 
     public void setCodigoRastreio(String codigoRastreio) {
         this.codigoRastreio = codigoRastreio;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

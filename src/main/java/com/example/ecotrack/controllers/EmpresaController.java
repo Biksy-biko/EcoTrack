@@ -53,6 +53,8 @@ public class EmpresaController {
         return ResponseEntity.ok(usuarioEmpresaBanco);
     }
 
+    @GetMapping
+
     @PostMapping("/criar")
     @Operation(
             summary = "Cadastrar nova empresa",

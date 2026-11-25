@@ -21,6 +21,9 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private List<Usuario> usuarios;
 
+    @OneToMany(mappedBy = "empresa")
+    private List<Entrega> entregas;
+
     public Empresa() {}
 
     public Long getId() {
@@ -69,5 +72,13 @@ public class Empresa {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public List<Entrega> getEntregas() {
+        return entregas;
+    }
+
+    public void setEntregas(List<Entrega> entregas) {
+        this.entregas = entregas;
     }
 }

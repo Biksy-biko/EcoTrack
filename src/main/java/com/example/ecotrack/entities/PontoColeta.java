@@ -1,5 +1,6 @@
 package com.example.ecotrack.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,11 +18,12 @@ public class PontoColeta {
     private String codPonto;
 
     @ManyToMany(mappedBy = "pontoColeta")
+    @JsonIgnore
     private List<Entrega> entrega = new ArrayList<>();
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
-    private Cidade cidade;*/
+    private Cidade cidade;
 
     public PontoColeta(){}
 

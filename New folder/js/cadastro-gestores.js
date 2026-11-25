@@ -43,9 +43,8 @@ async function loadCompanyOptions() {
     });
     const options = sortedCompanies.map((company) => {
       const option = document.createElement("option");
-      const companyName = company.nomeFantasia || company.razaoSocial || "Empresa";
       option.value = String(company.id);
-      option.textContent = `${companyName}${company.cnpj ? ` - ${company.cnpj}` : ""}`;
+      option.textContent = String(company.id);
       return option;
     });
 
